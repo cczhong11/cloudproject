@@ -20,25 +20,25 @@ class FlavorForm extends React.Component {
             return response.json();
         }).then(function (response) {
             console.log(response.code);
-        })
+        });
     };
-};
-render() {
-    return (
-        <form onSubmit={this.handleSubmit} >
-            <label>
-                Pick your favorite language:
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit} >
+                <label>
+                    Pick your favorite language:
             <select value={this.state.value} onChange={this.handleChange}>
-                    <option value="java">java</option>
-                    <option value="python">python</option>
-                    <option value="c">c</option>
-                    <option value="cpp">cpp</option>
-                </select>
-            </label>
-            <input type="submit" value="Submit" />
-        </form>
-    );
-}
+                        <option value="java">java</option>
+                        <option value="python">python</option>
+                        <option value="c">c</option>
+                        <option value="cpp">cpp</option>
+                    </select>
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    }
 }
 
 ReactDOM.render(
