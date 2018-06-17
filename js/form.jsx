@@ -14,15 +14,9 @@ class FlavorForm extends React.Component {
     handleSubmit(event) {
         fetch('https://us-central1-leetcode-207514.cloudfunctions.net/demo', {
             method: 'POST',
-            body: { "question": "1", "lang": this.state.value, "time": "10" }
-        }).done(function (data) {
-            response = ($.type(data) === "object")
-                ? data
-                : JSON.parse(data);
-            console.log(response.code)
-        });
-        alert(this.state.value)
-    }
+            body: JSON.stringify({ "question": "1", "lang": this.state.value, "time": "10" })
+        }).then(response => response.json()).then(console.log(response.code))
+    };
     render() {
         return (
             <form onSubmit={this.handleSubmit} >
