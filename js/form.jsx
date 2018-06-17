@@ -16,7 +16,7 @@ class FlavorForm extends React.Component {
         fetch('https://us-central1-leetcode-207514.cloudfunctions.net/demo', {
             method: 'post',
             body: JSON.stringify({ "question": "1", "lang": this.state.value, "time": "10" })
-        }).then(response => response.json()).then(console.log(response.code))
+        }).then(response => response.json()).then(console.log(response))
     };
     render() {
         return (
