@@ -1,7 +1,7 @@
 class FlavorForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { value: 'coconut' };
+        this.state = { value: 'java' };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -12,8 +12,9 @@ class FlavorForm extends React.Component {
     }
 
     handleSubmit(event) {
+        console.log(this.state.value);
         fetch('https://us-central1-leetcode-207514.cloudfunctions.net/demo', {
-            method: 'POST',
+            method: 'post',
             body: JSON.stringify({ "question": "1", "lang": this.state.value, "time": "10" })
         }).then(response => response.json()).then(console.log(response.code))
     };
