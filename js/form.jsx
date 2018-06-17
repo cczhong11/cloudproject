@@ -12,11 +12,14 @@ class FlavorForm extends React.Component {
     }
 
     handleSubmit(event) {
-        $.post('https://us-central1-leetcode-207514.cloudfunctions.net/demo', { "question": "1", "lang": this.state.value, "time": "10" }).done(function (data) {
+        fetch('https://us-central1-leetcode-207514.cloudfunctions.net/demo', {
+            method: 'POST',
+            body: { "question": "1", "lang": this.state.value, "time": "10" }
+        }).done(function (data) {
             response = ($.type(data) === "object")
                 ? data
                 : JSON.parse(data);
-            alert(response.code)
+            console.log(response.code)
         });
         alert(this.state.value)
     }
