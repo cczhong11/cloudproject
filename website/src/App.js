@@ -41,7 +41,8 @@ export default class App extends React.Component {
   }
   changeTime(event){
     this.setState({ //changing state based on first selectbox value
-      time: event.target.value
+      time: event.target.value,
+      code:""
     });
    
   }
@@ -138,10 +139,10 @@ return (<div>
           })          
         }
         </select>
-        <button onClick={this.getData}>search</button>
+        <button onClick={this.getData}>get</button>
         <br></br>
-        
-        <div style={{flex: 1, width: '50%'}}>
+        The service now is very very slow. I am trying to make it fast.
+        <div style={{flex: 1, width: '100%'}}>
           <SyntaxHighlighter 
             style={require(`react-syntax-highlighter/dist/styles/hljs/vs`).default} 
             showLineNumbers={true}
