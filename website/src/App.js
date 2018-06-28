@@ -1,12 +1,11 @@
+'use strict';
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-'use strict';
-import React from 'react';
 import axios from 'axios';
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
-
+axios.defaults.headers.post["Content-Type"]="application/json"
 export default class App extends React.Component {
     constructor(props) {
       super(props);
@@ -46,7 +45,7 @@ export default class App extends React.Component {
      
     }
     async getData(){
-      const res = await axios.post('https://us-central1-leetcode-207514.cloudfunctions.net/demo',{ question: this.state.num, lang: this.state.language,time: this.state.time});
+      const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/demo?q='+this.state.num+"&lang="+this.state.language+"&time="+this.state.time);
       var result = await res;
       try{
         this.setState({
@@ -62,7 +61,10 @@ export default class App extends React.Component {
     var result = await res;
     try{
       this.setState({
-        lang: result.data.data
+        lang: result.data.data,
+        language:result.data.data[0]
+      },()=>{
+        this.getTime()
       })
       
     }catch(err){
@@ -85,6 +87,7 @@ export default class App extends React.Component {
     render() {
         return ( 
          <div>
+         <h1>DEMO for question 1</h1>
           <label className = "control-label" > Language </label>
           <select id ="lang_avail" onChange = {this.changeModel}>
           {
