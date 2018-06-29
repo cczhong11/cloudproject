@@ -47,7 +47,7 @@ export default class App extends React.Component {
    
   }
   async getData(){
-    const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/demo?q='+this.state.num+"&lang="+this.state.language+"&time="+this.state.time);
+    const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/demo?q='+this.state.num+"&lang="+this.state.language+"&time="+this.state.time,{'timeout': 5000});
     var result = await res;
     try{
       this.setState({
@@ -141,7 +141,7 @@ return (<div>
         </select>
         <button onClick={this.getData}>get</button>
         <br></br>
-        The service now is very very slow. I am trying to make it fast.
+        
         <div style={{flex: 1, width: '100%'}}>
           <SyntaxHighlighter 
             style={require(`react-syntax-highlighter/dist/styles/hljs/vs`).default} 
