@@ -1,1 +1,10 @@
 https://leetcode.com/submissions/api/detail/39/go/17/
+
+
+# kind=question->lang
+name is question
+content is array of lang
+
+# kind=question+lang->time
+
+name is question+lang, content is array of time

@@ -1,78 +1,47 @@
-
 import requests
 import json
 import csv
 import datetime
+import sys
 lang = ['java', 'c', 'cpp', 'python', 'python3', 'javascript']
 c = {}
-c["LEETCODE_SESSION"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfYXV0aF91c2VyX2lkIjoiMzQ2NjAxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYWxsYXV0aC5hY2NvdW50LmF1dGhfYmFja2VuZHMuQXV0aGVudGljYXRpb25CYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiMDIxNmU5NjVjNzc5ZGMxYjRjMzkzYzdmMGRhNWJjY2YxZWI2NjQ2ZiIsImlkIjozNDY2MDEsImVtYWlsIjoidHpob25nMUBhbmRyZXcuY211LmVkdSIsInVzZXJuYW1lIjoidGMzIiwidXNlcl9zbHVnIjoidGMzIiwiYXZhdGFyIjoiaHR0cHM6Ly9zMy1sYy11cGxvYWQuczMuYW1hem9uYXdzLmNvbS91c2Vycy90YzMvYXZhdGFyLnBuZyIsInRpbWVzdGFtcCI6IjIwMTgtMDYtMTYgMTQ6NDk6NTEuMzc4NDk5KzAwOjAwIiwiUkVNT1RFX0FERFIiOiIxODQuMTkxLjIzMC45OCIsIklERU5USVRZIjoiYmY0ODZmM2FiYTRjNDMyNjMyYmRlZDBmOTlhN2JkNDIiLCJfc2Vzc2lvbl9leHBpcnkiOjB9.7hj0y_h3itCb4uhuzC4zVkwsaj7gAA9xQhWAUcza5pI"
-c["csrftoken"] = "rwfG2jtst5FsTzTb1B9jbNIyGA8a8tRycqUAGqtFL5wWGb2SskNMyqHpZoWBFAuY"
+c["LEETCODE_SESSION"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfYXV0aF91c2VyX2lkIjoiMzQ2NjAxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYWxsYXV0aC5hY2NvdW50LmF1dGhfYmFja2VuZHMuQXV0aGVudGljYXRpb25CYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiMDIxNmU5NjVjNzc5ZGMxYjRjMzkzYzdmMGRhNWJjY2YxZWI2NjQ2ZiIsImlkIjozNDY2MDEsImVtYWlsIjoidHpob25nMUBhbmRyZXcuY211LmVkdSIsInVzZXJuYW1lIjoidGMzIiwidXNlcl9zbHVnIjoidGMzIiwiYXZhdGFyIjoiaHR0cHM6Ly9zMy1sYy11cGxvYWQuczMuYW1hem9uYXdzLmNvbS91c2Vycy90YzMvYXZhdGFyLnBuZyIsInRpbWVzdGFtcCI6IjIwMTgtMDYtMjcgMDE6MzQ6MzIuODg4ODUxKzAwOjAwIiwiUkVNT1RFX0FERFIiOiIxODQuMTkxLjIzMC45OCIsIklERU5USVRZIjoiZjlkOTdkYWFlNGJmYzg3ZmFhOTY2ZTM0YzAzYzZmNTQiLCJfc2Vzc2lvbl9leHBpcnkiOjB9.64Q1yUIijH7r0PZst6qL0FT76xbtTNW7_rrDAmotebM"
+c["csrftoken"] = "5Ss6u2n0qOovfeuYlR0S0RWHUaskQWBB2LklP6ieE8X5PACfDTJcMnNJqhEC1D5h"
 
 
-def getone(q, l):
+def getone(q, l,start=0,end=200,sep=1):
     with open("o_{1}_{0}.csv".format(q, l), 'w') as f:
         spamwriter = csv.writer(
             f, delimiter=',', quoting=csv.QUOTE_ALL, quotechar='"')
         count = 0
-        ra = 200
+        ra = end
         if l in ['python', 'python3', 'javascript']:
-            ra = 400
-        for time in range(ra):
+            ra = end*2
+        print(q)
+        for time in range(start,ra,sep):
             r = requests.get(
-                "https://leetcode.com/submissions/api/detail/{0}/{1}/{2}".format(q, l, time + 1), cookies=c)
+                "https://leetcode.com/submissions/api/detail/{0}/{1}/{2}".format(q, l, time), cookies=c)
             try:
+                if r.text[0]!="{":
+                    continue
                 rs = r.json()
-                if 'error' in rs and time > 100:
-                    break
                 if count > 100:
                     break
                 if 'error' in rs or 'code' not in rs:
                     continue
                 count += 1
-                spamwriter.writerow([i + 1, l, time, repr(rs["code"])])
+                spamwriter.writerow([count + 1, l, time, repr(rs["code"])])
                 print("write" + str(time))
-            except:
+            except Exception as ex:
+                print(ex)
                 continue
+    return "o_{1}_{0}.csv".format(q, l)
+lang = sys.argv[1]
 
+def download_from_file(file,s,e,sep):
+    with open(file) as f:
+        for l in f:
+            q = l[:-1]
+            getone(int(q),lang,s,e,sep)
 
-getone(771, "c")
-
-for i in range(824, 900):
-    for l in lang:
-        with open("o_{1}_{0}.csv".format(i + 1, l), 'w') as f:
-            spamwriter = csv.writer(
-                f, delimiter=',', quoting=csv.QUOTE_ALL, quotechar='"')
-            count = 0
-            ra = 200
-            if l in ['python', 'python3', 'javascript']:
-                ra = 400
-            for time in range(ra):
-                r = requests.get(
-                    "https://leetcode.com/submissions/api/detail/{0}/{1}/{2}".format(i + 1, l, time + 1), cookies=c)
-                try:
-                    rs = r.json()
-                    if 'error' in rs and time > 100:
-                        break
-                    if count > 100:
-                        break
-                    if 'error' in rs or 'code' not in rs:
-                        continue
-                    count += 1
-                    spamwriter.writerow([i + 1, l, time, repr(rs["code"])])
-                    print("write" + str(time))
-                except:
-                    continue
-
-
-'''
-create table `code` (
-    `uuid` bigint(20) not null AUTO_INCREMENT,
-	`question` int(20) not null,
-	`lang` varchar(20) not null,
-    `time` int(20) not null,
-	`code` varchar(5000) not null,
-	primary key (uuid)
-);
-
-mysql -u root -ptest --local-infile=1 -e "USE code; load data local infile 'o_c_1.csv' into table code columns terminated by ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' (question, lang, time, code)"
-'''
+download_from_file("z",0,500,10)
