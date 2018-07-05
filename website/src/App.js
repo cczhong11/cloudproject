@@ -5,7 +5,7 @@ import React, {
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-
+import crypto from 'crypto';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 axios.defaults.headers.post["Content-Type"] = "application/json"
 
@@ -25,6 +25,8 @@ export default class App extends React.Component {
             }
             //this.getData()
             
+            
+
             this.changeModel = this.changeModel.bind(this);
             this.changeTime = this.changeTime.bind(this);
             this.getData = this.getData.bind(this);
@@ -49,7 +51,10 @@ export default class App extends React.Component {
 
         }
         async getData() {
-            const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/demo?q=' + this.state.num + "&lang=" + this.state.language + "&time=" + this.state.time, {
+            var key = crypto.createCipheriv('aes-128-cbc', process.env.REACT_APP_CRED,process.env.REACT_APP_IV);
+            var string = key.update('q=' + this.state.num + "&lang=" + this.state.language + "&time=" + this.state.time, 'utf8', 'hex');
+            string+=key.final('hex')
+            const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/question?request='+string, {
                 'timeout': 5000
             });
             var result = await res;
@@ -63,7 +68,10 @@ export default class App extends React.Component {
         }
 
         async getLang() {
-            const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/demo?op=q&num=' + this.state.num);
+          var key = crypto.createCipheriv('aes-128-cbc', process.env.REACT_APP_CRED,process.env.REACT_APP_IV);
+          var string = key.update('op=q&num=' + this.state.num, 'utf8', 'hex');
+            string+=key.final('hex')
+            const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/question?request=' + string);
             var result = await res;
             try {
                 this.setState({
@@ -80,11 +88,16 @@ export default class App extends React.Component {
         }
 
         async getIn() {
-            const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/demo?op=in&num=' + this.state.num);
+          var key = crypto.createCipheriv('aes-128-cbc', process.env.REACT_APP_CRED,process.env.REACT_APP_IV);
+          var string = key.update('op=in&num=' + this.state.num, 'utf8', 'hex');
+          string+=key.final('hex');
+          console.log(string)
+            const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/question?request='+string);
             var result = await res;
             try {
                 this.setState({
-                    have_question: result.data.data
+                    have_question: result.data.data,
+                    code: " "
                 })
                 
 
@@ -95,7 +108,10 @@ export default class App extends React.Component {
         }
 
         async getQuestion() {
-            const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/demo?op=question&num=' + this.state.num);
+          var key = crypto.createCipheriv('aes-128-cbc', process.env.REACT_APP_CRED,process.env.REACT_APP_IV);
+          var string = key.update('op=question&num=' + this.state.num, 'utf8', 'hex');
+          string+=key.final('hex')
+            const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/question?request=' + string);
             var result = await res;
             try {
                 this.setState({
@@ -109,7 +125,10 @@ export default class App extends React.Component {
 
         }
         async getTime() {
-            const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/demo?op=ql&num=' + this.state.num + "&lang=" + this.state.language);
+          var key = crypto.createCipheriv('aes-128-cbc', process.env.REACT_APP_CRED,process.env.REACT_APP_IV);
+          var string = key.update('op=ql&num=' + this.state.num + "&lang=" + this.state.language, 'utf8', 'hex');
+          string+=key.final('hex')
+            const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/question?request='+string);
             var result = await res;
             try {
                 this.setState({

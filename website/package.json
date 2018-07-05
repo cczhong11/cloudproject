@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cors": "^2.8.4",
+    "crypto": "^1.0.1",
     "gh-pages": "^1.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
