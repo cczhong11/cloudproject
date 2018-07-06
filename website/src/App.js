@@ -91,7 +91,7 @@ export default class App extends React.Component {
           var key = crypto.createCipheriv('aes-128-cbc', process.env.REACT_APP_CRED,process.env.REACT_APP_IV);
           var string = key.update('op=in&num=' + this.state.num, 'utf8', 'hex');
           string+=key.final('hex');
-          console.log(string)
+          
             const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/question?request='+string);
             var result = await res;
             try {
