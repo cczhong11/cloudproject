@@ -5,8 +5,8 @@ import datetime
 import sys
 lang = ['java', 'c', 'cpp', 'python', 'python3', 'javascript']
 c = {}
-c["LEETCODE_SESSION"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfYXV0aF91c2VyX2lkIjoiMzQ2NjAxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYWxsYXV0aC5hY2NvdW50LmF1dGhfYmFja2VuZHMuQXV0aGVudGljYXRpb25CYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiMDIxNmU5NjVjNzc5ZGMxYjRjMzkzYzdmMGRhNWJjY2YxZWI2NjQ2ZiIsImlkIjozNDY2MDEsImVtYWlsIjoidHpob25nMUBhbmRyZXcuY211LmVkdSIsInVzZXJuYW1lIjoidGMzIiwidXNlcl9zbHVnIjoidGMzIiwiYXZhdGFyIjoiaHR0cHM6Ly9zMy1sYy11cGxvYWQuczMuYW1hem9uYXdzLmNvbS91c2Vycy90YzMvYXZhdGFyLnBuZyIsInRpbWVzdGFtcCI6IjIwMTgtMDYtMjcgMDE6MzQ6MzIuODg4ODUxKzAwOjAwIiwiUkVNT1RFX0FERFIiOiIxODQuMTkxLjIzMC45OCIsIklERU5USVRZIjoiZjlkOTdkYWFlNGJmYzg3ZmFhOTY2ZTM0YzAzYzZmNTQiLCJfc2Vzc2lvbl9leHBpcnkiOjB9.64Q1yUIijH7r0PZst6qL0FT76xbtTNW7_rrDAmotebM"
-c["csrftoken"] = "5Ss6u2n0qOovfeuYlR0S0RWHUaskQWBB2LklP6ieE8X5PACfDTJcMnNJqhEC1D5h"
+c["LEETCODE_SESSION"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfYXV0aF91c2VyX2lkIjoiMzQ2NjAxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiYWxsYXV0aC5hY2NvdW50LmF1dGhfYmFja2VuZHMuQXV0aGVudGljYXRpb25CYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiMDIxNmU5NjVjNzc5ZGMxYjRjMzkzYzdmMGRhNWJjY2YxZWI2NjQ2ZiIsImlkIjozNDY2MDEsImVtYWlsIjoidHpob25nMUBhbmRyZXcuY211LmVkdSIsInVzZXJuYW1lIjoidGMzIiwidXNlcl9zbHVnIjoidGMzIiwiYXZhdGFyIjoiaHR0cHM6Ly9zMy1sYy11cGxvYWQuczMuYW1hem9uYXdzLmNvbS91c2Vycy90YzMvYXZhdGFyLnBuZyIsInRpbWVzdGFtcCI6IjIwMTgtMDctMDggMDE6Mjc6MzcuOTM1NDAwKzAwOjAwIiwiUkVNT1RFX0FERFIiOiIxODQuMTkxLjIzMC45OCIsIklERU5USVRZIjoiZjlkOTdkYWFlNGJmYzg3ZmFhOTY2ZTM0YzAzYzZmNTQiLCJfc2Vzc2lvbl9leHBpcnkiOjB9.6DlYKoc5Af7auPkPyzA9CVaNLj2euiUL0gTpsUYy_AI"
+c["csrftoken"] = "QFniQuQ3QiIQvFg8hRCvAQocu0mMh03uuPZ5iPgzXgQE1yxbT7IuNe1ERSjLX4hD"
 
 
 def getone(q, l,start=0,end=200,sep=1):
@@ -36,12 +36,12 @@ def getone(q, l,start=0,end=200,sep=1):
                 print(ex)
                 continue
     return "o_{1}_{0}.csv".format(q, l)
-lang = sys.argv[1]
+#lang = sys.argv[1]
 
-def download_from_file(file,s,e,sep):
+def download_from_file(file,start,end,sep):
     with open(file) as f:
         for l in f:
             q = l[:-1]
-            getone(int(q),lang,s,e,sep)
+            getone(int(q),lang,start,end,sep)
 
-download_from_file("z",0,500,10)
+#download_from_file("z",0,500,10)
