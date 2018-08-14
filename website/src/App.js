@@ -132,6 +132,7 @@ export default class App extends React.Component {
             super(props);
             this.state = {
                 num: "1",
+                realnum:"1",
                 code: " ",
                 lang: [],
                 language: "",
@@ -170,7 +171,7 @@ export default class App extends React.Component {
         }
         async getData() {
             var key = crypto.createCipheriv('aes-128-cbc', process.env.REACT_APP_CRED,process.env.REACT_APP_IV);
-            var string = key.update('q=' + this.state.num + "&lang=" + this.state.language + "&time=" + this.state.time, 'utf8', 'hex');
+            var string = key.update('q=' + this.state.realnum + "&lang=" + this.state.language + "&time=" + this.state.time, 'utf8', 'hex');
             string+=key.final('hex')
             const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/question?request='+string, {
                 'timeout': 5000
@@ -187,7 +188,7 @@ export default class App extends React.Component {
 
         async getLang() {
           var key = crypto.createCipheriv('aes-128-cbc', process.env.REACT_APP_CRED,process.env.REACT_APP_IV);
-          var string = key.update('op=q&num=' + this.state.num, 'utf8', 'hex');
+          var string = key.update('op=q&num=' + this.state.realnum, 'utf8', 'hex');
             string+=key.final('hex')
             const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/question?request=' + string);
             var result = await res;
@@ -207,7 +208,7 @@ export default class App extends React.Component {
 
         async getIn() {
           var key = crypto.createCipheriv('aes-128-cbc', process.env.REACT_APP_CRED,process.env.REACT_APP_IV);
-          var string = key.update('op=in&num=' + this.state.num, 'utf8', 'hex');
+          var string = key.update('op=in&num=' + this.state.realnum, 'utf8', 'hex');
           string+=key.final('hex');
           
             const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/question?request='+string);
@@ -244,7 +245,7 @@ export default class App extends React.Component {
         }
         async getTime() {
           var key = crypto.createCipheriv('aes-128-cbc', process.env.REACT_APP_CRED,process.env.REACT_APP_IV);
-          var string = key.update('op=ql&num=' + this.state.num + "&lang=" + this.state.language, 'utf8', 'hex');
+          var string = key.update('op=ql&num=' + this.state.realnum + "&lang=" + this.state.language, 'utf8', 'hex');
           string+=key.final('hex')
             const res = await axios.get('https://us-central1-leetcode-207514.cloudfunctions.net/question?request='+string);
             var result = await res;
@@ -279,11 +280,14 @@ export default class App extends React.Component {
                     alert("please enter numbers only");
                 }
             }
+            var mapvalue = newText;
             if(newText in map){
-                newText = map[newText];
+                mapvalue = map[newText];
             }
+            
             this.setState({
                 num: newText,
+                realnum:mapvalue,
                 showResult:false
             });
         }
